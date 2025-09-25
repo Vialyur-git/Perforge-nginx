@@ -1,0 +1,100 @@
+version: '3.7'
+
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/certs:/etc/nginx/certs:ro
+    depends_on:
+      - influxdb
+      - grafana
+    networks:
+      - monitoring
+    restart: always
+
+  perforge:
+    image: perforge/perforge-app:2.1.0
+    container_name: perforge
+    ports:
+      - "7878:7878"
+    volumes:
+      - perforge-conf:/app/app/data/
+    networks:
+      - monitoring
+    restart: always 
+
+  influxdb:
+    image: influxdb:2.7.6-alpine
+    container_name: influxdb
+    volumes:
+      - influxdb-data:/var/lib/influxdb2
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=admin
+      - DOCKER_INFLUXDB_INIT_PASSWORD=admin123
+      - DOCKER_INFLUXDB_INIT_ORG=perforge
+      - DOCKER_INFLUXDB_INIT_BUCKET=jmeter
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=DqwGq5e7Avv9gKYi2NtRtRenOxbvEqXMtg-r4WjNxYlerHMfikeLtCTJwSTzk-5NheVXTOFi0qug5jRGuh8-mw==
+    ports:
+      - "8086:8086"
+    networks:
+      - monitoring
+    restart: always
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - prometheus_data:/prometheus
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - monitoring
+    restart: always
+
+  grafana:
+    image: grafana/grafana:10.0.2
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-home:/var/lib/grafana/
+      - grafana-conf:/etc/grafana/
+    networks:
+      - monitoring
+    restart: always
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin123
+      - GF_RENDERING_SERVER_URL=http://renderer:8081/render
+      - GF_RENDERING_CALLBACK_URL=http://grafana:3000/
+      - GF_SERVER_ROOT_URL=https://<IP_Address>/dashboard/
+
+  renderer:
+    image: grafana/grafana-image-renderer:latest
+    container_name: renderer
+    ports:
+      - "8081:8081"
+    networks:
+      - monitoring
+    restart: always
+    environment:
+      - ENABLE_METRICS=true
+
+volumes:
+  prometheus_data:
+  perforge-conf:
+  influxdb-data:
+  grafana-home:
+  grafana-conf:
+  renderer:
+
+networks:
+  monitoring:
+    driver: bridge

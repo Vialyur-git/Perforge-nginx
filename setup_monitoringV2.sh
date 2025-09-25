@@ -30,9 +30,9 @@ read -p "Enter your VM IP address: " ip_vm_address
 read -p "Enter path for deployment (e.g., /home/azureuser or /root): " deploymentPath
 
 # Check if deploymentPath exists, create it if it doesn't
-if [ ! -d "/home/$deploymentPath" ]; then
-    echo "Directory /home/$deploymentPath does not exist. Creating it now..."
-    mkdir -p "/home/$deploymentPath"
+if [ ! -d "$deploymentPath" ]; then
+    echo "Directory $deploymentPath does not exist. Creating it now..."
+    mkdir -p "$deploymentPath"
 fi
 
 # Move all files and folders except the script itself to /home/$username/$directory

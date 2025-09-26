@@ -77,6 +77,7 @@ mv apache-jmeter-5.6.3 /opt/apache-jmeter
 
 print_message "Add JMeter to your PATH for easier access:"
 echo 'export PATH=$PATH:/opt/apache-jmeter/bin' >> ~/.bashrc
+export PATH=$PATH:/opt/apache-jmeter/bin
 source ~/.bashrc
 
 print_message "verify that JMeter is installed"

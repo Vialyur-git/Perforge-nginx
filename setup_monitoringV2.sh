@@ -10,11 +10,6 @@ function print_message() {
     echo -e "=====================\n"
 }
 
-# Start script execution
-print_message "Updating package list and installing Docker & Docker Compose"
-apt update
-apt install -y docker.io docker-compose
-
 print_message "Setting up the Ubuntu Firewall"
 ufw enable
 ufw allow ssh
@@ -41,6 +36,14 @@ for item in *; do
         mv "$item" "$deploymentPath/"
     fi
 done
+
+print_message "Go to created folder"
+cd $deploymentPath
+
+# Start script execution
+print_message "Updating package list and installing Docker & Docker Compose"
+apt update
+apt install -y docker.io docker-compose
 
 print_message "Updating docker-compose.yml with the provided IP address"
 sed -i "s/<IP_Address>/$ip_vm_address/g" $deploymentPath/docker-compose.yml

@@ -10,13 +10,13 @@ function print_message() {
     echo -e "=====================\n"
 }
 
-print_message "Setting up the Ubuntu Firewall"
-ufw enable
-ufw allow ssh
-ufw allow 80
-ufw allow 3000
-ufw allow 443/tcp
-ufw reload
+# print_message "Setting up the Ubuntu Firewall"
+# ufw enable
+# ufw allow ssh
+# ufw allow 80
+# ufw allow 3000
+# ufw allow 443/tcp
+# ufw reload
 
 # Request IP address input
 read -p "Enter your VM IP address: " ip_vm_address

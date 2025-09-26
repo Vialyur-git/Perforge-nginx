@@ -92,4 +92,4 @@ print_message "Delete JMeter and Backend Listener Plugin Archives"
 rm apache-jmeter-5.6.3.tgz
 rm backendlistener-jmeter.mysql-1.0.jar
 
-print_message "Setup complete! Use JMeter and monitor your Docker Compose services."
+print_message "Setup complete! Working derictory -- $deploymentPath"

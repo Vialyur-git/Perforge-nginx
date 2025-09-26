@@ -83,14 +83,14 @@ source ~/.bashrc
 print_message "verify that JMeter is installed"
 jmeter --version
 
-print_message "Download Backend Listener Plugin"
-wget https://jmeter-plugins.s3.amazonaws.com/plugins/jmeter.backendlistener.mysql/backendlistener-jmeter.mysql-1.0.jar
+# print_message "Download Backend Listener Plugin"
+# wget https://jmeter-plugins.s3.amazonaws.com/plugins/jmeter.backendlistener.mysql/backendlistener-jmeter.mysql-1.0.jar
 
-print_message "Place Backend Listener Plugin in JMeter's lib/ext directory"
-mv backendlistener-jmeter.mysql-1.0.jar /opt/apache-jmeter/lib/ext/
+# print_message "Place Backend Listener Plugin in JMeter's lib/ext directory"
+# mv backendlistener-jmeter.mysql-1.0.jar /opt/apache-jmeter/lib/ext/
 
 print_message "Delete JMeter and Backend Listener Plugin Archives"
 rm apache-jmeter-5.6.3.tgz
-rm backendlistener-jmeter.mysql-1.0.jar
+# rm backendlistener-jmeter.mysql-1.0.jar
 
 print_message "Setup complete! Working derictory -- $deploymentPath"

@@ -73,7 +73,7 @@ print_message "Extracting JMeter files"
 tar -xvzf apache-jmeter-5.6.3.tgz
 
 print_message "Move JMeter to /opt directory for system-wide access:"
-mv apache-jmeter-5.5 /opt/apache-jmeter
+mv apache-jmeter-5.6.3 /opt/apache-jmeter
 
 print_message "Add JMeter to your PATH for easier access:"
 echo 'export PATH=$PATH:/opt/apache-jmeter/bin' >> ~/.bashrc
